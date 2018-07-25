@@ -8,7 +8,7 @@ cc.Class({
         },
         camera: {
             default: null,
-            type: cc.Node
+            type: cc.Nodezz
         },
         root: {
             default: null,
