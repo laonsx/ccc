@@ -23,27 +23,31 @@ cc.Class({
         this.container.on(cc.Node.EventType.TOUCH_MOVE,function(event){
 
             cc.log("............move")
-            var touches = event.getTouches();
+            let touches = event.getTouches();
             if (touches.length == 1){
 
-                var touch = touches[0]
+                let touch = touches[0]
 
-                var delta = touch.getDelta()
+                let delta = touch.getDelta()
+
+                if (delta){
 
 
-
-                cc.log("...",touch.getPreviousLocation(),touch.getLocation(),touch.getDelta(),touch.getStartLocation())
+                    this.x -= delta.x
+                    this.y -= delta.y
+                }
+                cc.log("...",delta.x,delta.y,this)
             }
 
             if (touches.length >= 2) {
-                var touch1 = touches[0], touch2 = touches[1];
-                var delta1 = touch1.getDelta(), delta2 = touch2.getDelta();
-                var touchPoint1 = parent.convertToNodeSpaceAR(touch1.getLocation());
-                var touchPoint2 = parent.convertToNodeSpaceAR(touch2.getLocation());
+                let touch1 = touches[0], touch2 = touches[1];
+                let delta1 = touch1.getDelta(), delta2 = touch2.getDelta();
+                let touchPoint1 = parent.convertToNodeSpaceAR(touch1.getLocation());
+                let touchPoint2 = parent.convertToNodeSpaceAR(touch2.getLocation());
                 //缩放
-                var distance = cc.pSub(touchPoint1, touchPoint2);
-                var delta = cc.pSub(delta1, delta2);
-                var scale = 1;
+                let distance = cc.pSub(touchPoint1, touchPoint2);
+                let delta = cc.pSub(delta1, delta2);
+                let scale = 1;
                 if (Math.abs(distance.x) > Math.abs(distance.y)) {
                     scale = (distance.x + delta.x) / distance.x * self.target.scale;
                 }
