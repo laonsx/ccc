@@ -12,7 +12,8 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        target: cc.Node
+        cameraNode : cc.Node,
+        camera:cc.Camera
     },
 
     onLoad: function () {
@@ -31,9 +32,11 @@ cc.Class({
 
                 if (delta) {
 
-                    let cameraNode = cc.find("camera")
-                    cameraNode.x -= delta.x
-                    cameraNode.y -= delta.y
+                    // let cameraNode = cc.find("camera")
+                    // cameraNode.x -= delta.x
+                    // cameraNode.y -= delta.y
+                    self.cameraNode.x -=delta.x
+                    self.cameraNode.y -=delta.y
                 }
 
 
@@ -43,22 +46,33 @@ cc.Class({
             if (touches.length >= 2) {
                 let touch1 = touches[0], touch2 = touches[1];
                 let delta1 = touch1.getDelta(), delta2 = touch2.getDelta();
-                let touchPoint1 = parent.convertToNodeSpaceAR(touch1.getLocation());
-                let touchPoint2 = parent.convertToNodeSpaceAR(touch2.getLocation());
+                let touchPoint1 = touch1.getLocation();
+                let touchPoint2 = touch2.getLocation();
                 //缩放
                 let distance = cc.pSub(touchPoint1, touchPoint2);
                 let delta = cc.pSub(delta1, delta2);
-                let scale = 1;
+                let zoomRatio = 1;
                 if (Math.abs(distance.x) > Math.abs(distance.y)) {
-                    scale = (distance.x + delta.x) / distance.x * self.target.scale;
+                    zoomRatio = (distance.x + delta.x) / distance.x * self.camera.zoomRatio;
                 }
                 else {
-                    scale = (distance.y + delta.y) / distance.y * self.target.scale;
+                    zoomRatio = (distance.y + delta.y) / distance.y * self.camera.zoomRatio;
                 }
-                self.target.scale = scale < 0.1 ? 0.1 : scale;
+                self.camera.zoomRatio = zoomRatio < 0.1 ? 0.1 : zoomRatio;
             }
 
         }, this.node)
     },
 
+    changeSize:function (type) {
+
+        if (type ===0){
+
+
+        }
+        if (type ===1){
+
+
+        }
+    },
 })
